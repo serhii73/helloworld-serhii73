@@ -1,22 +1,24 @@
 language: python
 sudo: false
-
 python:
-  - "3.6"
-  - "3.7-dev"
-
+- '3.6'
+- 3.7-dev
 before_install:
-  - python --version
-  - uname -a
-  - lsb_release -a
-
+- python --version
+- uname -a
+- lsb_release -a
 install:
-  - pip install tox
-
+- pip install tox
 script:
-  - tox -v -e py
-
+- tox -v -e py
 notifications:
   email:
     on_success: never
     on_failure: always
+deploy:
+  provider: pypi
+  user: serhii73
+  password:
+    secure: hItQNbmFZ7OjDDa87QiTa+Xn+cRNLrxfFcUdT7ZseBbcA5qnBRTkEzqUNcKUK/K3JZO3qFHOgGKazjIPjv6Z4VwSSLTl48mfYFZXe/9l3gV0EM9PMt7B2LLRw2kG35jfRLIKbRk+UMTPz13CxYSPkSziM7sCoSp8YNVb+No9MsD02YfE/ssSfxZFicgTG3/JrPXEDz4WSug3u/AkITehqYVA4wWWjwvFjDENESdhuM92CqOxz8KFZaTWuA18jt2ClzeJ85WzGJ/IRBM3BaA/x3qxE9K+bd6LRiq+A6dD/xwaJlng6luhHDHANTC2ZXot5lfdNS4AdnSmfiBXZT3CO7QC72+FLmbktnKnis44qXeaf4gzvMCNr8amQllXLQaTjQNtR/mjyH83iZEiStwFYG86VHsxBU24CIi8b1HuAUuT+t04qOjauhvuws0DScKK/dqayx5qE4C/X1X38tG63fzees958ycTtDaBOzaiZa0NdFwntPBOya9+BK/xu2UeK+LyKHJeTsLmysC+0FzjqOZn0X43TkbvDS7/1/pqJh42K15z4hfmscuh+SoHH70mW2SkncMNCybf8UOVIev8W1G2zfFS4xAY83UQRjK11ygi3DPa0D641JwiCoOAsO8edu8hzxe5NLyg/UpVspCHe6G6RDKlVj4vNPjRVcmHiNg=
+  on:
+    branch: master
