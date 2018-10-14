@@ -1,22 +1,53 @@
-language: python
+conditions: v1
+dist: trusty
 sudo: false
+language: python
 python:
-- '3.6'
-- 3.7-dev
-before_install:
-- python --version
-- uname -a
-- lsb_release -a
-install:
-- pip install tox
-script:
-- tox -v -e py
-notifications:
-  email:
-    on_success: never
-    on_failure: always
+- 3.6
+script: tox -v -e py
+jobs:
+  include:
+  - python: 3.7
+    dist: xenial
+    sudo: true
+  - python: 3.5
+    dist: xenial
+    sudo: true
+  - python: 3.4
+    dist: xenial
+    sudo: true
+  - python: 3.3
+    dist: xenial
+    sudo: true
+  - python: 3.2
+    dist: xenial
+    sudo: true
+  - python: 2.7
+    dist: xenial
+    sudo: true
+  - python: 2.6
+    dist: xenial
+    sudo: true
+  - stage: upload new version of python package to PYPI (only for tagged commits)
+    if: tag IS present
+    python: 3.6
+    install: skip
+    script: skip
+    deploy:
+      provider: pypi
+      on:
+        all_branches: true
+        tags: true
+      user: serhii73
+      password:
+        secure: 
+      distributions: clean --all sdist bdist_wheel
+      skip_cleanup: true
+      skip_upload_docs: true
+cache:
+  pip: true
 deploy:
-  provider: pypi
-  user: serhii73
   password:
-    secure: aIUaS9ZqNm61hdMkqjWXVa+xcAEqMnNtzicJYy/LxewlEi/T47mxO+MLxnIAfuPQnF8RjcfiCCuAam6ESG0FEf9SwlIk9ZfFaVN1kTMeZIx4jLwJfx6cwH9AqFM6SBW7EeXEXzm7oQkuQtDC/VdaYM1DjhenJPjMS5S5t/Gfa7XwNAcG08PaUACfJw5Z1SnzxDxk0ocM+Soi5u7l9UrH1cSGQAdSw7/6h9dW+cLszis8VIhrqTNVYIKOWSCvoxTmgmr1Xi6YmZq96AHp2Nx9Rtx0TIlb/cPgK58PZ/nEcLQgv572QhdPdHhrtWl+MJZy8RJVUOWuNVbh+3cBDzWMCb2+ttOHZttbddMCaZX6aXDp+PrxamyDSP3F3IdGDGytWgoy951fBhK/0T8zLaRKSCwxna+FCaRnNNkkZV/f+ysjoBMU3PtGdX09q1Uz3If6j6jBcRrah0d9odmNxtMAMw48GfqYt+yhvZh+Wu8Si10KRRe4hfrwYc2lYooREnaRLL4Ha/pzbhGm2ka9/CE4AFNsh5vtrwyfXgFxpHmsLm79knRoZxzAhRBwkMNbPz/mIB6iPCDslEeY5mFVc5fXGHtQUsU6YO7O+PJBDJI0FMmZ4ahbEeIPhMc7FGDWetJWLEvEbXO9F8AeGRqDngnRqLhvElCjggwj5iJeq9Q2BXY=
+    secure: 
+CiklumNot3eBest:
+  secure: nWcJoXixuFdbazu5ApZlWD0Se10sZuIXKjgnNtUdtuEpE5JwPiZHSrpIhbJkjOoryi8kWF6+Sv/Emyp1Jf7EBRXyK8fNMop9LtNDszXVlvOxtW9CI2AIoJgT0B7UQVYTfNGpjgK3OBknaUteyYLGEvhjkVAKqCKJsWoCRM+PLH0vIxVab6zQm36+00CYNa1RgRlLvY+C0fSUdHMFJJioyY1XRDw2UCh24T/Qc3WxyZUrjVo/e6lpNZrN6qu9agPSYFRzMzugl+iuxa2JKVzt0hIgczl6MMA8LyEfy4HHZq5r7rY1KaOVQgr+U3g/EpZdQ4TmVbTQR7+MEbXgt7qdRcOXkZBScJfF793HAQQ2Aaef9+OYb3M3mRvfjZQnbTnGRyyqDg415CfMWqRIpf0GeJe/eDmfIovVSy8X/vjv9hbE5JH5CSbnGljweJxOhaxSNGFThPZaZZ7kR1v8JUjYgME3otQa3g1BtQrMEAjNsUa8vPCRF6B1i8K5SfHRZE7e1oESa5XBFjXjAsGrOTRBCqBeOnzPccNEgap/eRGSd3cr4yUS1AZ0bamxzVyvUitZr9/IGOY2Z5HLQ3VoULNgjWNCPX5WwzShG0OxxYO47AIVFYgzpNMJYUQH/SBSUWwKhCaiegk+KuFkUa55pUvFfhZ98c+yuTIyOmTkwIkp340=
