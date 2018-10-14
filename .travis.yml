@@ -38,8 +38,7 @@ jobs:
     deploy:
       provider: pypi
       on:
-        all_branches: true
-        tags: true
+        branch: master
       user: serhii73
       password:
         secure: 
